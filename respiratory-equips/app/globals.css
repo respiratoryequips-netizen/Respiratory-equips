@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #0D3B3E;
+  --color-primary-light: #124F52;
+
+  --color-accent: #17877A;
+  --color-accent-dark: #0F6B60;
+  --color-accent-light: #E6F4F2;
+
+  --color-surface: #F7FAFA;
+
+  /* Fonts */
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: #1F2937;
+}
+
+.bg-hero-gradient {
+  background-image: linear-gradient(
+    135deg,
+    #E9F5F4 0%,
+    #F7FBFA 50%,
+    #E3F1EF 100%
+  );
+}
+
+.hero-image-blend {
+  mask-image: radial-gradient(ellipse 75% 75% at center, black 60%, transparent 96%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at center, black 60%, transparent 96%);
+}
