@@ -21,18 +21,20 @@ const getCategoryBySlug = asyncHandler(async (req, res) => {
 
 // POST /api/admin/categories — protected
 const createCategory = asyncHandler(async (req, res) => {
-  const { name, description, image, order, metaTitle, metaDescription } = req.body;
+  const { name, description, image, metaTitle, metaDescription } = req.body;
 
   if (!name || !name.trim()) throw new ApiError(400, "Category name is required");
+  if (!description || !description.trim()) throw new ApiError(400, "Category description is required");
+  if (!image || !image.url) throw new ApiError(400, "Category image is required");
 
   const slug = await generateUniqueSlug(Category, name);
 
   const category = await Category.create({
     name: name.trim(),
     slug,
-    description: description || "",
-    image: image || { url: "", publicId: "" },
-    order: order ?? 0,
+    description: description.trim(),
+    image,
+    order: 0,
     metaTitle: metaTitle || name.trim(),
     metaDescription: metaDescription || description || "",
   });
@@ -47,24 +49,32 @@ const updateCategory = asyncHandler(async (req, res) => {
   const category = await Category.findById(req.params.id);
   if (!category) throw new ApiError(404, "Category not found");
 
-  const { name, description, image, order, metaTitle, metaDescription } = req.body;
+  const { name, description, image, metaTitle, metaDescription } = req.body;
 
-  if (name && name.trim() && name.trim() !== category.name) {
-    category.slug = await generateUniqueSlug(Category, name, category._id);
+  if (name !== undefined) {
+    if (!name.trim()) throw new ApiError(400, "Category name cannot be empty");
+    if (name.trim() !== category.name) {
+      category.slug = await generateUniqueSlug(Category, name, category._id);
+    }
     category.name = name.trim();
   }
 
-  if (description !== undefined) category.description = description;
-  if (order !== undefined) category.order = order;
+  if (description !== undefined) {
+    if (!description.trim()) throw new ApiError(400, "Category description cannot be empty");
+    category.description = description;
+  }
+
   if (metaTitle !== undefined) category.metaTitle = metaTitle;
   if (metaDescription !== undefined) category.metaDescription = metaDescription;
 
-  if (image && image.publicId && image.publicId !== category.image?.publicId) {
-    // Replace image — remove the old one from Cloudinary if it existed.
-    if (category.image?.publicId) {
-      await cloudinary.uploader.destroy(category.image.publicId).catch(() => {});
+  if (image !== undefined) {
+    if (!image?.url) throw new ApiError(400, "Category image is required");
+    if (image.publicId !== category.image?.publicId) {
+      if (category.image?.publicId) {
+        await cloudinary.uploader.destroy(category.image.publicId).catch(() => {});
+      }
+      category.image = image;
     }
-    category.image = image;
   }
 
   await category.save();

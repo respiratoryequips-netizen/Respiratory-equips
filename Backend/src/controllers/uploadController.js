@@ -8,10 +8,14 @@ function streamUpload(buffer) {
     const stream = cloudinary.uploader.upload_stream(
       { folder: "respiratory-equips" },
       (error, result) => {
+        console.log("Cloudinary error:", error);
+        console.log("Cloudinary result:", result);
+
         if (result) resolve(result);
         else reject(error);
       }
     );
+
     streamifier.createReadStream(buffer).pipe(stream);
   });
 }

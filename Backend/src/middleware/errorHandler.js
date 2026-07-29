@@ -29,15 +29,34 @@ function errorHandler(err, req, res, next) {
     message = `Invalid ${err.path}: ${err.value}`;
   }
 
-  if (statusCode >= 500) {
-    console.error("[ErrorHandler]", err);
+  // Cloudinary SDK errors (upload/delete failures) — these arrive as
+  // { message, http_code, name: "UnexpectedResponse" } rather than as an ApiError.
+  if (err.http_code) {
+    statusCode = err.http_code;
+    if (err.http_code === 401 || err.http_code === 403) {
+      message =
+        "Image upload was rejected by Cloudinary. This almost always means CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, or CLOUDINARY_API_SECRET in your .env is incorrect. Double-check them against your Cloudinary dashboard.";
+    } else if (err.http_code === 400) {
+      message = "Cloudinary rejected the upload — the file may be corrupted or an unsupported format.";
+    } else {
+      message = `Cloudinary error: ${err.message}`;
+    }
   }
+
+  // Always print full details to the terminal for debugging, regardless of
+  // what gets sent to the frontend.
+  console.error("──── ERROR ────");
+  console.error(`Route: ${req.method} ${req.originalUrl}`);
+  console.error(`Status: ${statusCode}`);
+  console.error(`Message: ${err.message}`);
+  if (err.http_code) console.error(`Cloudinary http_code: ${err.http_code}`);
+  if (err.stack) console.error(err.stack);
+  console.error("────────────────");
 
   res.status(statusCode).json({
     success: false,
     message,
     errors,
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 }
 
