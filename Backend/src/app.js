@@ -11,41 +11,41 @@ const { router: productRoutes, adminRouter: adminProductRoutes } = require("./ro
 const contactRoutes = require("./routes/contactRoutes");
 
 
-// const app = express();
+const app = express();
 
-// const allowedOrigins = (process.env.CORS_ORIGINS || "").split(",").map((o) => o.trim());
-
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) callback(null, true);
-//       else callback(new Error(`Origin ${origin} not allowed by CORS`));
-//     },
-//     credentials: true,
-//   })
-// );
-console.log("CORS_ORIGINS =", process.env.CORS_ORIGINS);
-const allowedOrigins = (process.env.CORS_ORIGINS || "")
-  .split(",")
-  .map((o) => o.trim());
-
-console.log("Allowed Origins:", allowedOrigins);
+const allowedOrigins = (process.env.CORS_ORIGINS || "").split(",").map((o) => o.trim());
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log("Incoming Origin:", origin);
-
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("NOT ALLOWED:", origin);
-        callback(new Error(`Origin ${origin} not allowed by CORS`));
-      }
+      if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+      else callback(new Error(`Origin ${origin} not allowed by CORS`));
     },
     credentials: true,
   })
 );
+// console.log("CORS_ORIGINS =", process.env.CORS_ORIGINS);
+// const allowedOrigins = (process.env.CORS_ORIGINS || "")
+//   .split(",")
+//   .map((o) => o.trim());
+
+// console.log("Allowed Origins:", allowedOrigins);
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       console.log("Incoming Origin:", origin);
+
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         console.log("NOT ALLOWED:", origin);
+//         callback(new Error(`Origin ${origin} not allowed by CORS`));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 app.use(express.json({ limit: "2mb" }));
 app.use(logger);
