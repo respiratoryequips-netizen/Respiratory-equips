@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FaStar, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaStar, FaCheckCircle, FaTimesCircle, FaWhatsapp  } from "react-icons/fa";
 import { getProducts, getProductBySlug } from "@/lib/api";
 import ProductJsonLd from "@/components/seo/ProductJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
@@ -122,7 +122,9 @@ export default async function ProductDetailPage({
             <p className="text-2xl font-bold text-primary mt-4">
               PKR {product.price.toLocaleString()}
             </p>
-          ):""}
+          ) : (
+            ""
+          )}
 
           <div className="flex items-center gap-2 mt-2">
             {product.inStock ? (
@@ -146,12 +148,22 @@ export default async function ProductDetailPage({
             <p className="text-gray-600 mt-5">{product.shortDescription}</p>
           )}
 
-          <Link
-            href="/#contact"
-            className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors mt-6"
-          >
-            Request a Consultation
-          </Link>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link
+              href="/#contact"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Request a Consultation
+            </Link>
+            <a
+              href={`https://wa.me/923162568654?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}. Can you share more details?`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-green-500 text-green-600 hover:bg-green-50 px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
+              <FaWhatsapp /> WhatsApp Us
+            </a>
+          </div>
 
           {product.specifications.length > 0 && (
             <div className="mt-8">

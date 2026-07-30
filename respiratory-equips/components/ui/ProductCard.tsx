@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FaHeart, FaStar } from "react-icons/fa";
+import { FaHeart, FaStar, FaWhatsapp } from "react-icons/fa";
 import { Product } from "@/data/products";
 
 export default function ProductCard({
@@ -11,9 +11,19 @@ export default function ProductCard({
   href,
 }: {
   product: Product;
-  href?: string; // pass this when rendering dynamic backend products
+  href?: string;
 }) {
   const [wishlisted, setWishlisted] = useState(false);
+
+  const handleWhatsApp = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const message = `Hi, I'm interested in ${product.name}. Can you share more details?`;
+    window.open(
+      `https://wa.me/923162568654?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
+  };
 
   const CardInner = (
     <div className="bg-white border border-gray-100 rounded-xl p-4 relative hover:shadow-md transition-shadow flex flex-col h-full">
@@ -69,8 +79,11 @@ export default function ProductCard({
       </div>
 
       <div className="flex gap-2 mt-4">
-        <button className="flex-1 border border-gray-200 rounded-lg py-2 text-xs font-medium hover:bg-gray-50">
-          Quick View
+        <button
+          onClick={handleWhatsApp}
+          className="cursor-pointer flex-1 flex items-center justify-center gap-1.5 border border-green-500 text-green-600 rounded-lg py-2 text-xs font-medium hover:bg-green-50 transition-colors"
+        >
+          <FaWhatsapp /> WhatsApp
         </button>
         {/* <button className="flex-1 bg-accent hover:bg-accent-dark text-white rounded-lg py-2 text-xs font-medium">
           Add to Cart

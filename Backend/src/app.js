@@ -8,6 +8,8 @@ const authRoutes = require("./routes/authRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const { router: categoryRoutes, adminRouter: adminCategoryRoutes } = require("./routes/categoryRoutes");
 const { router: productRoutes, adminRouter: adminProductRoutes } = require("./routes/productRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+
 
 const app = express();
 
@@ -34,6 +36,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/categories", adminCategoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/admin/products", adminProductRoutes);
+app.use("/api/contact", contactRoutes); 
 
 app.use(notFound);
 app.use(errorHandler);

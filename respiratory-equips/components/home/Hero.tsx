@@ -1,5 +1,13 @@
 import Image from "next/image";
-import { FaShoppingCart, FaCalendarAlt, FaShieldAlt, FaUserCheck, FaTruck, FaClock } from "react-icons/fa";
+import Link from "next/link";
+import {
+  FaShoppingCart,
+  FaCalendarAlt,
+  FaShieldAlt,
+  FaUserCheck,
+  FaTruck,
+  FaClock,
+} from "react-icons/fa";
 
 const trustBadges = [
   { icon: FaShieldAlt, title: "100% Genuine", subtitle: "Products" },
@@ -22,7 +30,8 @@ export default function Hero() {
             <span className="text-accent">Starts Here.</span>
           </h1>
           <p className="mt-5 text-gray-700 text-lg font-semibold">
-            Premium CPAP, BiPAP & Respiratory Solutions from Trusted Global Brands.
+            Premium CPAP, BiPAP & Respiratory Solutions from Trusted Global
+            Brands.
           </p>
           <p className="mt-3 text-gray-500">
             We help thousands of patients breathe easier and live healthier with
@@ -30,12 +39,18 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4 mt-7">
-            <button className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            <Link
+              href="/products"
+              className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
               <FaShoppingCart /> Shop Products
-            </button>
-            <button className="flex items-center gap-2 bg-white border border-accent text-accent hover:bg-accent-light px-6 py-3 rounded-lg font-semibold transition-colors">
+            </Link>
+            <Link
+              href="/#contact"
+              className="flex items-center gap-2 bg-white border border-accent text-accent hover:bg-accent-light px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
               <FaCalendarAlt /> Book Consultation
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">

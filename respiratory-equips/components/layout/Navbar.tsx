@@ -7,12 +7,12 @@ import { FaSearch, FaPhoneAlt, FaWhatsapp, FaBars, FaTimes, FaChevronDown } from
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "#about" },
-  { label: "Products", href: "#products", dropdown: true },
-  { label: "Brands", href: "#brands" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "About Us", href: "/#about" },
+  { label: "Products", href: "/#products" },
+  { label: "Brands", href: "/#brands" },
+  { label: "Why Us", href: "/#why-us" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -52,12 +52,12 @@ export default function Navbar() {
               className="flex items-center gap-1 whitespace-nowrap hover:text-accent transition-colors"
             >
               {link.label}
-              {link.dropdown && <FaChevronDown className="text-xs" />}
+              {/* {link.dropdown && <FaChevronDown className="text-xs" />} */}
             </Link>
           ))}
         </nav>
 
-        {/* Search */}
+        {/* Search
         <div className="hidden lg:flex items-center border border-gray-200 rounded-full px-4 py-2 w-48 shrink-0">
           <input
             type="text"
@@ -65,23 +65,23 @@ export default function Navbar() {
             className="flex-1 text-sm outline-none bg-transparent min-w-0"
           />
           <FaSearch className="text-gray-400 shrink-0" />
-        </div>
+        </div> */}
 
         {/* Call + WhatsApp */}
         <div className="hidden lg:flex items-center gap-3 shrink-0">
           <a
-            href="tel:03097892590"
+            href="tel:03162568654"
             className="flex items-center gap-2 bg-primary text-white rounded-full px-4 py-2 whitespace-nowrap"
           >
             <FaPhoneAlt />
             <span className="text-xs leading-tight">
-              03097892590
+              03162568654
               <br />
               <span className="font-semibold">Call Us Now</span>
             </span>
           </a>
           <a
-            href="https://wa.me/923097892590"
+            href="https://wa.me/03162568654"
             aria-label="WhatsApp"
             className="bg-green-500 text-white p-3 rounded-full hover:bg-green-600 shrink-0"
           >
